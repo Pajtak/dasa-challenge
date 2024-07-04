@@ -26,20 +26,20 @@ const productModel = sequelize.define(
     },
     product_image: {
       type: DataTypes.BLOB("long"),
-      allowNull: false,
+      allowNull: true,
     },
     category_id: {
       type: DataTypes.INTEGER,
       references: {
         model: Category,
-        key: "id",
+        key: "category_id",
       },
     },
     user_id: {
       type: DataTypes.INTEGER,
       references: {
         model: User,
-        key: "id",
+        key: "user_id",
       },
     },
   },

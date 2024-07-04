@@ -5,6 +5,7 @@ const userController = require("../controller/userController");
 const categoryController = require("../controller/categoryController");
 const productController = require("../controller/productController");
 const AdminAuth = require("../middleware/adminAuth");
+const authenticatedUser = require("../middleware/authenticatedUser");
 
 //Home Routes
 router.get("/", homeController.index);
@@ -13,38 +14,48 @@ router.get("/", homeController.index);
 
 router.post("/user", userController.create);
 router.get("/users", AdminAuth, userController.index);
-router.get("/user/:user_id", userController.findUser);
-router.put("/user", AdminAuth, userController.edit);
-router.delete("/user/:user_id", AdminAuth, userController.remove);
-router.post("/recoverpassword", userController.recoverPassword);
-router.post("/changepassword", userController.changePassword);
+router.get("/user/:user_id", authenticatedUser, userController.findUser);
+router.put("/user", authenticatedUser, userController.edit);
+router.delete("/user/:user_id", authenticatedUser, userController.remove);
+router.post(
+  "/recoverpassword",
+  authenticatedUser,
+  userController.recoverPassword
+);
+router.post(
+  "/changepassword",
+  authenticatedUser,
+  userController.changePassword
+);
 router.post("/login", userController.login);
 
 // Category Routes
-router.post("/category", AdminAuth, categoryController.create);
+router.post("/category", authenticatedUser, categoryController.create);
 router.get("/category", categoryController.index);
 router.get("/category/:category_id", categoryController.findCategory);
-router.get("/category/:category_name", categoryController.findCategoryByName);
 router.put(
   "/category/:category_id",
-  AdminAuth,
+  authenticatedUser,
   categoryController.editCategory
 );
 router.delete(
   "/category/:category_id",
-  AdminAuth,
+  authenticatedUser,
   categoryController.deleteCategory
 );
 
 //Product Routes
-router.post("/product", AdminAuth, productController.create);
+router.post("/product", authenticatedUser, productController.create);
 router.get("/product", productController.index);
 router.get("/product/:product_id", productController.findProduct);
-router.get("/product/:product_name", productController.findProductByName);
-router.put("/product/:product_id", AdminAuth, productController.editProduct);
+router.put(
+  "/product/:product_id",
+  authenticatedUser,
+  productController.editProduct
+);
 router.delete(
   "/product/:product_id",
-  AdminAuth,
+  authenticatedUser,
   productController.deleteProduct
 );
 

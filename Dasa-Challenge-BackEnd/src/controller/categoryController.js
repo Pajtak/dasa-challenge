@@ -1,6 +1,6 @@
 const Category = require("../models/categoryModel");
 
-class categoriesController {
+class CategoriesController {
   async index(req, res) {
     try {
       const categories = await Category.findAll();
@@ -11,8 +11,9 @@ class categoriesController {
   }
 
   async create(req, res) {
-    const { category_name, category_description, user_id } = req.body;
+    const { category_name, category_description } = req.body;
     let { category_image } = req.body;
+    const user_id = req.user.user_id;
 
     if (!category_name || category_name.trim() === "") {
       return res.status(400).json({ error: "O título é inválido!" });
@@ -40,6 +41,7 @@ class categoriesController {
       });
       res.status(200).json({ message: "Categoria criada com sucesso!" });
     } catch (error) {
+      console.error("Erro ao criar categoria:", error);
       res.status(500).json({ error: "Erro ao criar categoria." });
     }
   }
@@ -57,26 +59,10 @@ class categoriesController {
     }
   }
 
-  async findCategoryByName(req, res) {
-    const categoryName = req.params.category_name;
-    categoryName = categoryName.trim().toLowerCase();
-
-    try {
-      const category = await Category.findOne({
-        where: { category_name: categoryName },
-      });
-      if (category === null) {
-        return res.status(404).json({});
-      }
-      res.status(200).json(category);
-    } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar categoria" });
-    }
-  }
-
   async editCategory(req, res) {
-    const { category_id, category_name, category_description, user_id } =
-      req.body;
+    const { category_id, category_name, category_description } = req.body;
+    const { id: user_id } = req.user;
+
     try {
       const result = await Category.update(
         { category_name, category_description, user_id },
@@ -109,4 +95,4 @@ class categoriesController {
   }
 }
 
-module.exports = new categoriesController();
+module.exports = new CategoriesController();

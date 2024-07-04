@@ -96,6 +96,7 @@ class UserController {
         res.status(406).json({ error: "Erro ao deletar usuário." });
       }
     } catch (error) {
+      console.log(error);
       res.status(500).send("Ocorreu um erro no servidor.");
     }
   }
@@ -149,7 +150,7 @@ class UserController {
 
         if (resultado) {
           const token = jwt.sign(
-            { email: user.user_email, role: user.user_role },
+            { email: user.user_email, role: user.user_role, id: user.user_id },
             secret,
             { expiresIn: "1h" }
           );

@@ -11,21 +11,17 @@ class productController {
   }
 
   async create(req, res) {
-    const {
-      product_name,
-      product_description,
-      product_price,
-      category_id,
-      user_id,
-    } = req.body;
+    const { product_name, product_description, product_price, category_id } =
+      req.body;
     let { product_image } = req.body;
+    const user_id = req.user.user_id;
 
     if (!product_name || product_name.trim() === "") {
       return res.status(400).json({ error: "O título é inválido!" });
     }
 
     try {
-      const nameExists = await product.findOne({ where: { product_name } });
+      const nameExists = await Product.findOne({ where: { product_name } });
       if (nameExists) {
         return res.status(406).json({ error: "O produto já está cadastrado!" });
       }
@@ -41,9 +37,9 @@ class productController {
         category_id,
         user_id,
       });
-      res.status(200).json({ message: "Produto criada com sucesso!" });
+      res.status(200).json({ message: "Produto criado com sucesso!" });
     } catch (error) {
-      res.status(500).json({ error: "Erro ao criar produto." });
+      res.status(500).json({ error: error });
     }
   }
 
@@ -60,23 +56,6 @@ class productController {
     }
   }
 
-  async findProductByName(req, res) {
-    const productName = req.params.product_name;
-    productName = productName.trim().toLowerCase();
-
-    try {
-      const product = await Product.findOne({
-        where: { product_name: productName },
-      });
-      if (product === null) {
-        return res.status(404).json({});
-      }
-      res.status(200).json(product);
-    } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar produto" });
-    }
-  }
-
   async editProduct(req, res) {
     const {
       product_id,
@@ -84,16 +63,16 @@ class productController {
       product_description,
       product_price,
       category_id,
-      user_id,
     } = req.body;
+
     try {
-      const result = await Category.update(
+      const result = await Product.update(
         {
           product_name,
           product_description,
           product_price,
           category_id,
-          user_id,
+          user_id: req.user.user_id,
         },
         { where: { product_id: product_id } }
       );
@@ -110,7 +89,7 @@ class productController {
   async deleteProduct(req, res) {
     const product_id = req.params.product_id;
     try {
-      const result = await Category.destroy({
+      const result = await Product.destroy({
         where: { product_id: product_id },
       });
       if (result) {
