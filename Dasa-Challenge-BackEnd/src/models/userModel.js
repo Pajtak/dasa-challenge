@@ -21,6 +21,7 @@ const userModel = sequelize.define(
     user_password: {
       type: DataTypes.STRING,
       allowNull: false,
+     
     },
     user_role: {
       type: DataTypes.INTEGER,
@@ -33,6 +34,7 @@ const userModel = sequelize.define(
   {
     tableName: "users",
     timestamps: false,
+    
   }
 );
 

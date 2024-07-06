@@ -19,12 +19,10 @@ router.put("/user", authenticatedUser, userController.edit);
 router.delete("/user/:user_id", authenticatedUser, userController.remove);
 router.post(
   "/recoverpassword",
-  authenticatedUser,
-  userController.recoverPassword
+   userController.recoverPassword
 );
 router.post(
   "/changepassword",
-  authenticatedUser,
   userController.changePassword
 );
 router.post("/login", userController.login);
