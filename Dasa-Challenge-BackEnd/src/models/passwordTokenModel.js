@@ -1,5 +1,5 @@
 const { DataTypes, Model } = require("sequelize");
-const sequelize = require("../database/database");
+const {sequelize} = require("../database/database");
 const bcrypt = require('bcrypt');
 
 class PasswordToken extends Model {

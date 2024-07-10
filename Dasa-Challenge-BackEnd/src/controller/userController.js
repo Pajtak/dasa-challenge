@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { Sequelize } = require("sequelize");
-const secret = "adsuasgdhjasgdhjdgahjsg12hj3eg12hj3g12hj3g12hj3g123";
+const secret = process.env.JWT_SECRET;
 
 class UserController {
   async index(req, res) {

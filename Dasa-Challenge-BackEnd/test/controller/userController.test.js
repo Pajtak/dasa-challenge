@@ -1,26 +1,42 @@
 const request = require("supertest");
 const app = require("../../src/app");
 const User = require("../../src/models/userModel");
+const jwt = require("jsonwebtoken");
+const { sequelize } = require("../../src/database/database");
 
-describe("UserController", () => {
+
+
+
+describe("UserController as Admin", () => {
   describe("GET /users", () => {
-    it("should get all users", async () => {
-      const response = await request(app).get("/users");
+    it("should get all users when logged as Admin", async () => {
+      
 
-      expect(response.status).toBe(200);
+      
+     
+      const response = await request(app)
+        .get("/users")
+        .set("Authorization", `Bearer ${global.adminToken}`)
+        .expect(200);
       expect(Array.isArray(response.body)).toBe(true);
     });
   });
 });
 
 describe("GET /users/:user_id", () => {
-  it("should get a user by ID", async () => {
-    const userId = 1;
+  it("should get a user by ID when logged as Admin", async () => {
 
-    const response = await request(app).get(`/users/${userId}`);
+   
+  const userId = 1
 
-    expect(response.status).toBe(200);
-    expect(response.body.user_id).toBe(userId);
+    const response = await request(app)
+      .get(`/user/${userId}`)
+      .set("Authorization", `Bearer ${global.adminToken}`)
+      .expect(200);
+      
+
+    expect(response.body).toBe(true);
+    console.log(response.body)
   });
 
   it("should return 404 if user ID does not exist", async () => {

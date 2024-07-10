@@ -1,6 +1,6 @@
 // models/Product.js
 const { DataTypes } = require("sequelize");
-const sequelize = require("../database/database");
+const { sequelize } = require("../database/database");
 const User = require("./userModel");
 const Category = require("./categoryModel");
 

@@ -6,6 +6,7 @@ const categoryController = require("../controller/categoryController");
 const productController = require("../controller/productController");
 const AdminAuth = require("../middleware/adminAuth");
 const authenticatedUser = require("../middleware/authenticatedUser");
+const authenticatedAndAdminUser = require('../middleware/authenticatedAndAdminUser')
 
 //Home Routes
 router.get("/", homeController.index);
@@ -14,7 +15,7 @@ router.get("/", homeController.index);
 
 router.post("/user", userController.create);
 router.get("/users", AdminAuth, userController.index);
-router.get("/user/:user_id", authenticatedUser, userController.findUser);
+router.get("/user/:user_id", authenticatedAndAdminUser, userController.findUser);
 router.put("/user", authenticatedUser, userController.edit);
 router.delete("/user/:user_id", authenticatedUser, userController.remove);
 router.post(
