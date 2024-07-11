@@ -1,4 +1,4 @@
-const Category = require("../models/categoryModel");
+import { categoryModel as Category } from "../models/categoryModel.js";
 
 class CategoriesController {
   async index(req, res) {
@@ -95,4 +95,4 @@ class CategoriesController {
   }
 }
 
-module.exports = new CategoriesController();
+export default new CategoriesController();

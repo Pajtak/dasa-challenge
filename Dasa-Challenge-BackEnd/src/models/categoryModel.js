@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
-const {sequelize} = require("../database/database");
-const User = require("./userModel");
+import { DataTypes } from "sequelize";
+import { sequelize } from "../database/database.js";
+import { userModel as User } from "./userModel.js";
 
-const categoryModel = sequelize.define(
+export const categoryModel = sequelize.define(
   "Category",
   {
     category_id: {
@@ -37,5 +37,3 @@ const categoryModel = sequelize.define(
 
 categoryModel.belongsTo(User, { foreignKey: "user_id" });
 User.hasMany(categoryModel, { foreignKey: "user_id" });
-
-module.exports = categoryModel;

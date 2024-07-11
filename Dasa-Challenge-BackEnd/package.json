@@ -1,5 +1,6 @@
 {
   "name": "challenge-dasa",
+  "type": "module",
   "version": "1.0.0",
   "description": "Case técnico apresentado em processo seletivo da Dasa.",
   "main": "src/app.js",
@@ -37,7 +38,8 @@
     "uuid": "^10.0.0"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.js"
+    ]
   }
 }
-

@@ -1,12 +1,13 @@
-const express = require("express");
-const router = express.Router();
-const homeController = require("../controller/homeController");
-const userController = require("../controller/userController");
-const categoryController = require("../controller/categoryController");
-const productController = require("../controller/productController");
-const AdminAuth = require("../middleware/adminAuth");
-const authenticatedUser = require("../middleware/authenticatedUser");
-const authenticatedAndAdminUser = require('../middleware/authenticatedAndAdminUser')
+import express from "express";
+
+import homeController from "../controller/homeController.js";
+import userController from "../controller/userController.js";
+import categoryController from "../controller/categoryController.js";
+import productController from "../controller/productController.js";
+import { AdminAuth } from "../middleware/adminAuth.js";
+import { authenticatedUser } from "../middleware/authenticatedUser.js";
+
+export const router = express.Router();
 
 //Home Routes
 router.get("/", homeController.index);
@@ -15,17 +16,11 @@ router.get("/", homeController.index);
 
 router.post("/user", userController.create);
 router.get("/users", AdminAuth, userController.index);
-router.get("/user/:user_id", authenticatedAndAdminUser, userController.findUser);
+router.get("/user/:user_id", authenticatedUser, userController.findUser);
 router.put("/user", authenticatedUser, userController.edit);
 router.delete("/user/:user_id", authenticatedUser, userController.remove);
-router.post(
-  "/recoverpassword",
-   userController.recoverPassword
-);
-router.post(
-  "/changepassword",
-  userController.changePassword
-);
+router.post("/recoverpassword", userController.recoverPassword);
+router.post("/changepassword", userController.changePassword);
 router.post("/login", userController.login);
 
 // Category Routes
@@ -57,5 +52,3 @@ router.delete(
   authenticatedUser,
   productController.deleteProduct
 );
-
-module.exports = router;

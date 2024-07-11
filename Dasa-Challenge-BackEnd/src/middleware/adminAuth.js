@@ -1,7 +1,10 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
+
 const secret = process.env.JWT_SECRET;
 
-module.exports = function (req, res, next) {
+export function AdminAuth(req, res, next) {
   const authToken = req.headers["authorization"];
 
   if (authToken != undefined) {
@@ -27,4 +30,4 @@ module.exports = function (req, res, next) {
     res.send("Você não está autenticado");
     return;
   }
-};
+}

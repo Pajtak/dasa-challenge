@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
-const {sequelize} = require("../database/database");
+import { DataTypes } from "sequelize";
+import { sequelize } from "../database/database.js";
 
-const userModel = sequelize.define(
+export const userModel = sequelize.define(
   "User",
   {
     user_id: {
@@ -21,7 +21,6 @@ const userModel = sequelize.define(
     user_password: {
       type: DataTypes.STRING,
       allowNull: false,
-     
     },
     user_role: {
       type: DataTypes.INTEGER,
@@ -34,8 +33,5 @@ const userModel = sequelize.define(
   {
     tableName: "users",
     timestamps: false,
-    
   }
 );
-
-module.exports = userModel;

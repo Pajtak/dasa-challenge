@@ -1,9 +1,6 @@
-class homeController{
-
-    async index(req, res){
-        res.send();
-    }
-
+class homeController {
+  async index(req, res) {
+    res.send();
+  }
 }
-
-module.exports = new homeController();
+export default new homeController();

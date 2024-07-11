@@ -1,5 +1,5 @@
-const passport = require("../config/passport-config");
+import { JWTPassport as passport } from "../config/passport-config.js";
 
-const authenticatedUser = passport.authenticate("jwt", { session: false });
-
-module.exports = authenticatedUser;
+export const authenticatedUser = passport.authenticate("jwt", {
+  session: false,
+});

@@ -40,11 +40,9 @@ function adminUser(req, res, next) {
   }
 }
 
-function authenticatedAndAdmin(req, res, next) {
+export function authenticatedAndAdmin(req, res, next) {
   authenticatedUser(req, res, (err) => {
     if (err) return res.status(401).json({ message: "Unauthorized" });
     adminUser(req, res, next);
   });
 }
-
-module.exports = authenticatedAndAdmin;

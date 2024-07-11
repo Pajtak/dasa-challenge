@@ -1,4 +1,4 @@
-const Product = require("../models/productModel");
+import { productModel as Product } from "../models/productModel.js";
 
 class productController {
   async index(req, res) {
@@ -103,4 +103,4 @@ class productController {
   }
 }
 
-module.exports = new productController();
+export default new productController();

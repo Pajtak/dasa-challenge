@@ -1,14 +1,11 @@
-const { DataTypes, Model } = require("sequelize");
-const {sequelize} = require("../database/database");
-const bcrypt = require('bcrypt');
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../database/database.js";
 
-class PasswordToken extends Model {
+export class PasswordToken extends Model {
   static async validate(token) {
     try {
-      
       const tokenRecord = await this.findOne({ where: { token: token } });
 
-     
       if (tokenRecord && !tokenRecord.used) {
         return { status: true, token: tokenRecord };
       } else {
@@ -59,5 +56,3 @@ PasswordToken.init(
     timestamps: false,
   }
 );
-
-module.exports = PasswordToken;

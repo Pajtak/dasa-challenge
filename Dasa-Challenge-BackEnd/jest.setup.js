@@ -1,5 +1,4 @@
-// jest.setup.js
-require('dotenv').config();
+require("dotenv").config();
 
 const User = require("./src/models/userModel");
 const { sequelize } = require("./src/database/database");

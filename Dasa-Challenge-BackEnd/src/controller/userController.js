@@ -1,9 +1,13 @@
-const User = require("../models/userModel");
-const PasswordToken = require("../models/passwordTokenModel");
-const { v4: uuidv4 } = require("uuid");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { Sequelize } = require("sequelize");
+import { userModel as User } from "../models/userModel.js";
+import { PasswordToken } from "../models/passwordTokenModel.js";
+import { v4 as uuidv4 } from "uuid";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const secret = process.env.JWT_SECRET;
 
 class UserController {
@@ -106,9 +110,15 @@ class UserController {
     const requestingUserId = req.user.user_id;
     const requestingUserRole = req.user.user_role;
 
-    console.log(typeof requestingUserId,typeof parseInt(id), requestingUserRole)
-    if(requestingUserId !== parseInt(id) && requestingUserRole !== 1){
-      return res.status(403).json({error: "Você não tem permissão para deletar esse usuário!"})
+    console.log(
+      typeof requestingUserId,
+      typeof parseInt(id),
+      requestingUserRole
+    );
+    if (requestingUserId !== parseInt(id) && requestingUserRole !== 1) {
+      return res
+        .status(403)
+        .json({ error: "Você não tem permissão para deletar esse usuário!" });
     }
     try {
       const result = await User.destroy({ where: { user_id: id } });
@@ -141,7 +151,7 @@ class UserController {
         { expiresIn: "1h" }
       );
 
-      res.status(200).json({token: result.token});
+      res.status(200).json({ token: result.token });
     } catch (error) {
       if (error instanceof Sequelize.ValidationError) {
         return res.status(400).send(error.errors);
@@ -205,4 +215,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+export default new UserController();

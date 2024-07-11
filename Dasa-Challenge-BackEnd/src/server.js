@@ -1,6 +1,6 @@
-const {sequelize} = require("./database/database");
+import { sequelize } from "./database/database.js";
 
-let app = require("./app");
+import { app } from "./app.js";
 
 sequelize
   .authenticate()
